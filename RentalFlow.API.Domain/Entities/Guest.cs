@@ -5,7 +5,7 @@ namespace RentalFlow.API.Domain.Entities;
 
 public class Guest : AuditableEntity<long>
 {
-    public long Id { get; set; } = default!; // Explicitly defining Id for clarity, even though AuditableEntity already has it.
+    public long Id { get; set; } = default!; 
     public string FirstName { get; set; } 
     public string LastName { get; set; }
     public DateTime DateOfBirth { get; set; }

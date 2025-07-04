@@ -70,7 +70,7 @@ public class HomeService : IHomeService
             HomeType = home.HomeType,
             Price = home.Price
         }).ToList();
-    }
+    }   
 
     public async Task<HomeDto> GetByIdAsync(long id)
     {
