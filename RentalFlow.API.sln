@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35825.156 d17.13
+VisualStudioVersion = 17.13.35825.156
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.API", "RentalFlow.API\RentalFlow.API.csproj", "{6E434B25-6721-43C9-B157-988C6D10B3C2}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.API.Application", "RentalFlow.API.Application\RentalFlow.API.Application.csproj", "{AFA196A6-501D-4AA6-BFE9-30332FB6985E}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.API.Infrastructure", "RentalFlow.API.Infrastructure\RentalFlow.API.Infrastructure.csproj", "{6771957D-4D6F-4525-B021-E2B5624E949B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.API.Tests", "RentalFlow.API.Tests\RentalFlow.API.Tests.csproj", "{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{6771957D-4D6F-4525-B021-E2B5624E949B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6771957D-4D6F-4525-B021-E2B5624E949B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6771957D-4D6F-4525-B021-E2B5624E949B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

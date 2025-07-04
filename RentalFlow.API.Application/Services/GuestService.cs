@@ -15,6 +15,9 @@ public class GuestService : IGuestService
     }
     public async Task<GuestDto> CreateAsync(GuestCreateDto guestCreateDto)
     {
+        if (guestCreateDto == null)
+            throw new ArgumentNullException(nameof(guestCreateDto));
+
         var guestEntity = new Guest
         {
             FirstName = guestCreateDto.FirstName,
@@ -27,6 +30,9 @@ public class GuestService : IGuestService
         };
 
         var createdGuest = await _guestRepository.CreateAsync(guestEntity);
+
+        if (createdGuest == null)
+            throw new InvalidOperationException("Failed to create guest.");
 
         return new GuestDto
         {
