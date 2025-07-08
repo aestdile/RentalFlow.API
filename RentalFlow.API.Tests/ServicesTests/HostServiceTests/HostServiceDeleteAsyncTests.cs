@@ -18,7 +18,6 @@ public class DeleteAsyncTests
     [Fact]
     public async Task DeleteAsync_ShouldReturnDeletedCount_WhenDeletionIsSuccessful()
     {
-        // Arrange
         long hostId = 1;
 
         var fakeHost = new Host
@@ -50,7 +49,7 @@ public class DeleteAsyncTests
     public async Task DeleteAsync_ShouldThrowKeyNotFoundException_WhenHostNotFound()
     {
         long hostId = 999;
-        _repo.Setup(r => r.GetByIdAsync(hostId)).ReturnsAsync((Host?)null); // ← MUHIM!
+        _repo.Setup(r => r.GetByIdAsync(hostId)).ReturnsAsync((Host?)null); 
 
         var service = new HostService(_repo.Object);
 

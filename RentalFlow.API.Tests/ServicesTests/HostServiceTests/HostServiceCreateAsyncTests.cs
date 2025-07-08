@@ -2,7 +2,6 @@
 using Moq;
 using RentalFlow.API.Application.DTOs.HostDTOs;
 using RentalFlow.API.Application.Interfaces.Repositories;
-using RentalFlow.API.Application.Services;
 using RentalFlow.API.Domain.Entities;
 using RentalFlow.API.Domain.Enums;
 

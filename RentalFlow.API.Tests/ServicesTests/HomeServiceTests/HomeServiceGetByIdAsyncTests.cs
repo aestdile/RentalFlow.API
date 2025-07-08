@@ -20,7 +20,6 @@ public class GetByIdAsyncTests
     [Fact]
     public async Task GetByIdAsync_ShouldReturnHomeDto_WhenHomeExists()
     {
-        // Arrange
         var homeId = 1L;
         var home = new Home
         {
@@ -41,10 +40,8 @@ public class GetByIdAsyncTests
 
         var service = new HomeService(_homeRepoMock.Object);
 
-        // Act
         var result = await service.GetByIdAsync(homeId);
 
-        // Assert
         result.Should().NotBeNull();
         result.Id.Should().Be(homeId);
         result.Address.Should().Be(home.Address);
@@ -55,16 +52,13 @@ public class GetByIdAsyncTests
     [Fact]
     public async Task GetByIdAsync_ShouldThrowKeyNotFound_WhenHomeNotFound()
     {
-        // Arrange
         var homeId = 99L;
         _homeRepoMock.Setup(r => r.GetByIdAsync(homeId)).ReturnsAsync((Home?)null);
 
         var service = new HomeService(_homeRepoMock.Object);
 
-        // Act
         Func<Task> act = () => service.GetByIdAsync(homeId);
 
-        // Assert
         await act.Should().ThrowAsync<KeyNotFoundException>()
             .WithMessage($"*{homeId}*");
     }

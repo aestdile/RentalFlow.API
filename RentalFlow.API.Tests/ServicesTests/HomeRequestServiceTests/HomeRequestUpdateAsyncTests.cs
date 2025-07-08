@@ -35,7 +35,6 @@ public class HomeRequestUpdateAsyncTests
     [Fact]
     public async Task UpdateAsync_ShouldThrow_WhenNotFound()
     {
-        // Arrange
         _repo
             .Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
             .ReturnsAsync((HomeRequest)null);
@@ -49,10 +48,8 @@ public class HomeRequestUpdateAsyncTests
             EndDate = DateTime.UtcNow.AddDays(3)
         };
 
-        // Act
         Func<Task> act = async () => await service.UpdateAsync(9999, updateDto);
 
-        // Assert
         await act.Should().ThrowAsync<KeyNotFoundException>()
             .WithMessage("HomeRequest with ID 9999 not found.");
     }

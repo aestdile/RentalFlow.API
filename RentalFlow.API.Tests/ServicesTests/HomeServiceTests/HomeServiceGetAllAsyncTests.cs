@@ -20,7 +20,6 @@ public class GetAllAsyncTests
     [Fact]
     public async Task GetAllAsync_ShouldReturnListOfHomeDtos_WhenHomesExist()
     {
-        // Arrange
         var homes = new List<Home>
         {
             new Home
@@ -57,10 +56,8 @@ public class GetAllAsyncTests
 
         var service = new HomeService(_homeRepoMock.Object);
 
-        // Act
         var result = await service.GetAllAsync();
 
-        // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
         result.First().Address.Should().Be("Tashkent");
@@ -70,15 +67,12 @@ public class GetAllAsyncTests
     [Fact]
     public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoHomesExist()
     {
-        // Arrange
         _homeRepoMock.Setup(r => r.GetAllAsync()).ReturnsAsync(new List<Home>());
 
         var service = new HomeService(_homeRepoMock.Object);
 
-        // Act
         var result = await service.GetAllAsync();
 
-        // Assert
         result.Should().NotBeNull();
         result.Should().BeEmpty();
     }

@@ -19,7 +19,6 @@ public class GetAllAsyncTests
     [Fact]
     public async Task GetAllAsync_ShouldReturnMappedDtos_WhenDataExists()
     {
-        // Arrange
         var homeRequests = new List<HomeRequest>
         {
             new HomeRequest
@@ -49,10 +48,8 @@ public class GetAllAsyncTests
         _repo.Setup(r => r.GetAllAsync()).ReturnsAsync(homeRequests);
         var service = new HomeRequestService(_repo.Object);
 
-        // Act
         var result = (await service.GetAllAsync()).ToList();
 
-        // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
         result[0].RequestMessage.Should().Be("Vacation request");
@@ -62,14 +59,11 @@ public class GetAllAsyncTests
     [Fact]
     public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoDataExists()
     {
-        // Arrange
         _repo.Setup(r => r.GetAllAsync()).ReturnsAsync(new List<HomeRequest>());
         var service = new HomeRequestService(_repo.Object);
 
-        // Act
         var result = await service.GetAllAsync();
 
-        // Assert
         result.Should().NotBeNull();
         result.Should().BeEmpty();
     }

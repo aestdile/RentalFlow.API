@@ -20,7 +20,6 @@ public class GetAllAsyncTests
     [Fact]
     public async Task GetAllAsync_ShouldReturnListOfHostDtos_WhenHostsExist()
     {
-        // Arrange
         var hosts = new List<Host>
         {
             new Host
@@ -48,10 +47,8 @@ public class GetAllAsyncTests
         _repo.Setup(r => r.GetAllAsync()).ReturnsAsync(hosts);
         var service = new HostService(_repo.Object);
 
-        // Act
         var result = await service.GetAllAsync();
 
-        // Assert
         result.Should().NotBeNull();
         result.Should().HaveCount(2);
         result.First().FirstName.Should().Be("Ali");
@@ -61,14 +58,11 @@ public class GetAllAsyncTests
     [Fact]
     public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoHostsExist()
     {
-        // Arrange
         _repo.Setup(r => r.GetAllAsync()).ReturnsAsync(new List<Host>());
         var service = new HostService(_repo.Object);
 
-        // Act
         var result = await service.GetAllAsync();
 
-        // Assert
         result.Should().NotBeNull();
         result.Should().BeEmpty();
     }

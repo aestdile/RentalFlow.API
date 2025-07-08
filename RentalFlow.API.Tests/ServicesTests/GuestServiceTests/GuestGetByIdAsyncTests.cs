@@ -19,7 +19,6 @@ namespace RentalFlow.UnitTests.GuestServiceTests
         [Fact]
         public async Task GetByIdAsync_ShouldReturnGuestDto_WhenGuestExists()
         {
-            // Arrange
             var guest = new Guest
             {
                 Id = 1,
@@ -37,10 +36,8 @@ namespace RentalFlow.UnitTests.GuestServiceTests
 
             var service = new GuestService(_guestRepositoryMock.Object);
 
-            // Act
             var result = await service.GetByIdAsync(1);
 
-            // Assert
             result.Should().NotBeNull();
             result.Id.Should().Be(guest.Id);
             result.FirstName.Should().Be(guest.FirstName);

@@ -19,7 +19,6 @@ namespace RentalFlow.UnitTests.GuestServiceTests
         [Fact]
         public async Task GetAllAsync_ShouldReturnListOfGuestDtos_WhenGuestsExist()
         {
-            // Arrange
             var guests = new List<Guest>
             {
                 new Guest
@@ -50,10 +49,8 @@ namespace RentalFlow.UnitTests.GuestServiceTests
 
             var service = new GuestService(_guestRepositoryMock.Object);
 
-            // Act
             var result = (await service.GetAllAsync()).ToList();
 
-            // Assert
             result.Should().NotBeNull();
             result.Should().HaveCount(2);
             result[0].FirstName.Should().Be("Alice");
@@ -63,17 +60,14 @@ namespace RentalFlow.UnitTests.GuestServiceTests
         [Fact]
         public async Task GetAllAsync_ShouldReturnEmptyList_WhenNoGuestsExist()
         {
-            // Arrange
             _guestRepositoryMock
                 .Setup(repo => repo.GetAllAsync())
                 .ReturnsAsync(new List<Guest>());
 
             var service = new GuestService(_guestRepositoryMock.Object);
 
-            // Act
             var result = await service.GetAllAsync();
 
-            // Assert
             result.Should().NotBeNull();
             result.Should().BeEmpty();
         }

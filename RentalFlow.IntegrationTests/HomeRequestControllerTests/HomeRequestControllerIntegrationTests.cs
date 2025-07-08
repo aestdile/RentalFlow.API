@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Net.Http.Json;
-using System.Text.Json;
 using FluentAssertions;
 using Microsoft.AspNetCore.Mvc.Testing;
 using RentalFlow.API.Application.DTOs.GuestDTOs;
@@ -8,7 +7,6 @@ using RentalFlow.API.Application.DTOs.HomeDTOs;
 using RentalFlow.API.Application.DTOs.HomeRequestDTOs;
 using RentalFlow.API.Application.DTOs.HostDTOs;
 using RentalFlow.API.Domain.Enums;
-using Xunit;
 
 namespace RentalFlow.IntegrationTests.HomeRequestControllerTests;
 
@@ -36,12 +34,12 @@ public class HomeRequestControllerIntegrationTests : IClassFixture<WebApplicatio
         };
 
         var guestResp = await _client.PostAsJsonAsync("/api/guest", guestDto);
-        guestResp.EnsureSuccessStatusCode(); 
+        guestResp.EnsureSuccessStatusCode();
         var createdGuest = await guestResp.Content.ReadFromJsonAsync<GuestDto>();
 
         var homeDto = new HomeCreateDto
         {
-            HostId = 1, 
+            HostId = 1,
             Address = "Tashkent, Uzbekistan",
             Description = "Test Home Description",
             IsAvailable = true,
@@ -49,12 +47,12 @@ public class HomeRequestControllerIntegrationTests : IClassFixture<WebApplicatio
             NoofBathRooms = 2,
             Area = 120.5,
             IsPetAllowed = true,
-            HomeType = HomeType.Flat, 
+            HomeType = HomeType.Flat,
             Price = 150_000M
         };
 
         var homeResp = await _client.PostAsJsonAsync("/api/home", homeDto);
-        homeResp.EnsureSuccessStatusCode(); 
+        homeResp.EnsureSuccessStatusCode();
         var createdHome = await homeResp.Content.ReadFromJsonAsync<HomeDto>();
 
         var dto = new HomeRequestCreateDto
