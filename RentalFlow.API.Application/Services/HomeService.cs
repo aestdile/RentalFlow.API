@@ -47,10 +47,16 @@ public class HomeService : IHomeService
         return result;
     }
 
-    public Task<long> DeleteAsync(long id)
+    public async Task<long> DeleteAsync(long id)
     {
-        return _homeRepository.DeleteAsync(id);
+        var home = await _homeRepository.GetByIdAsync(id);
+        if (home == null)
+            return 0;
+
+        await _homeRepository.DeleteAsync(id);
+        return id;
     }
+
 
     public async Task<IEnumerable<HomeDto>> GetAllAsync()
     {

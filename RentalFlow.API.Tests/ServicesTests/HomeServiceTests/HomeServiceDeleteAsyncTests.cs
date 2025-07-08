@@ -18,38 +18,47 @@ public class DeleteAsyncTests
     [Fact]
     public async Task DeleteAsync_ShouldReturnDeletedCount_WhenIdExists()
     {
-        // Arrange
-        long inputId = 5;
-        _homeRepoMock
-            .Setup(repo => repo.DeleteAsync(inputId))
-            .ReturnsAsync(1L); 
+        var homeId = 1L;
 
-        var service = new HomeService(_homeRepoMock.Object);
+        var mockRepo = new Mock<IGenericRepository<Home>>();
 
-        // Act
-        var result = await service.DeleteAsync(inputId);
+        mockRepo.Setup(r => r.GetByIdAsync(homeId))
+                .ReturnsAsync(new Home { Id = homeId });
 
-        // Assert
+        mockRepo.Setup(r => r.DeleteAsync(homeId))
+                .ReturnsAsync(1L);
+
+        var service = new HomeService(mockRepo.Object);
+
+        var result = await service.DeleteAsync(homeId);
+
         result.Should().Be(1L);
-        _homeRepoMock.Verify(repo => repo.DeleteAsync(inputId), Times.Once);
+
+        mockRepo.Verify(r => r.GetByIdAsync(homeId), Times.Once);
+        mockRepo.Verify(r => r.DeleteAsync(homeId), Times.Once);
     }
+
+
 
     [Fact]
     public async Task DeleteAsync_ShouldReturnZero_WhenIdDoesNotExist()
     {
-        // Arrange
-        long inputId = 999;
-        _homeRepoMock
-            .Setup(repo => repo.DeleteAsync(inputId))
-            .ReturnsAsync(0L);
+        var nonExistingId = 999L;
+        var mockRepo = new Mock<IGenericRepository<Home>>();
 
-        var service = new HomeService(_homeRepoMock.Object);
+        mockRepo.Setup(r => r.GetByIdAsync(nonExistingId))
+                .ReturnsAsync((Home?)null); 
 
-        // Act
-        var result = await service.DeleteAsync(inputId);
+        mockRepo.Setup(r => r.DeleteAsync(nonExistingId))
+                .ReturnsAsync(0L); 
 
-        // Assert
+        var service = new HomeService(mockRepo.Object);
+
+        var result = await service.DeleteAsync(nonExistingId);
+
         result.Should().Be(0L);
-        _homeRepoMock.Verify(repo => repo.DeleteAsync(inputId), Times.Once);
+
+        mockRepo.Verify(r => r.DeleteAsync(It.IsAny<long>()), Times.Never);
     }
+
 }

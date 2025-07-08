@@ -41,9 +41,7 @@ public class HomeRequestRepository : IGenericRepository<HomeRequest>
     {
         var existingHomeRequest = await _rentalFlowDbContext.HomeRequests.FindAsync(id);
         if (existingHomeRequest == null)
-        {
-            throw new KeyNotFoundException($"HomeRequest with ID {id} not found.");
-        }
+            return null;
 
         existingHomeRequest.RequestMessage = entity.RequestMessage;
         existingHomeRequest.StartDate = entity.StartDate;

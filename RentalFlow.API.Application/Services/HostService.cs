@@ -40,10 +40,15 @@ public class HostService : IHostService
         return result;
     }
 
-    public Task<long> DeleteAsync(long id)
+    public async Task<long> DeleteAsync(long id)
     {
-        return _hostRepository.DeleteAsync(id);
+        var host = await _hostRepository.GetByIdAsync(id);
+        if (host == null)
+            throw new KeyNotFoundException($"Host with ID {id} not found.");
+
+        return await _hostRepository.DeleteAsync(id);
     }
+
 
     public async Task<IEnumerable<HostDto>> GetAllAsync()
     {
