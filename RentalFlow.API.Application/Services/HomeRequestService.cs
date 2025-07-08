@@ -61,31 +61,30 @@ public class HomeRequestService : IHomeRequestService
 
     public async Task<HomeRequestDto> GetByIdAsync(long id)
     {
-        var homeRequest = await _homeRequestRepository.GetByIdAsync(id);
-        if (homeRequest == null)
+        var request = await _homeRequestRepository.GetByIdAsync(id);
+        if (request == null)
         {
-            throw new KeyNotFoundException($"Home request with ID {id} not found.");
+            throw new KeyNotFoundException($"HomeRequest with ID {id} not found.");
         }
 
         return new HomeRequestDto
         {
-            Id = homeRequest.Id,
-            GuestId = homeRequest.GuestId,
-            HomeId = homeRequest.HomeId,
-            RequestMessage = homeRequest.RequestMessage,
-            StartDate = homeRequest.StartDate,
-            EndDate = homeRequest.EndDate,
-            CreatedAt = homeRequest.CreatedAt,
-            UpdatedAt = homeRequest.UpdatedAt
+            Id = request.Id,
+            GuestId = request.GuestId,
+            HomeId = request.HomeId,
+            RequestMessage = request.RequestMessage,
+            StartDate = request.StartDate,
+            EndDate = request.EndDate
         };
     }
+
 
     public async Task<HomeRequestDto> UpdateAsync(long id, HomeRequestUpdateDto homeRequestUpdateDto)
     {
         var homeRequest = await _homeRequestRepository.GetByIdAsync(id);
         if (homeRequest == null)
         {
-            throw new KeyNotFoundException($"Home request with ID {id} not found.");
+            throw new KeyNotFoundException($"HomeRequest with ID {id} not found.");
         }
 
         homeRequest.RequestMessage = homeRequestUpdateDto.RequestMessage;

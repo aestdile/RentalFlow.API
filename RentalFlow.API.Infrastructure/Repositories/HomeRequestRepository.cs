@@ -22,14 +22,13 @@ public class HomeRequestRepository : IGenericRepository<HomeRequest>
     {
         var homeRequest = await _rentalFlowDbContext.HomeRequests.FindAsync(id);
         if (homeRequest == null)
-        {
-            throw new KeyNotFoundException($"HomeRequest with ID {id} not found.");
-        }
+            return 0;
 
         _rentalFlowDbContext.HomeRequests.Remove(homeRequest);
         await _rentalFlowDbContext.SaveChangesAsync();
         return id;
     }
+
     public async Task<IEnumerable<HomeRequest>> GetAllAsync()
     {
         return await _rentalFlowDbContext.HomeRequests.ToListAsync();

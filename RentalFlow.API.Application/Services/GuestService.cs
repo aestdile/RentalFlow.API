@@ -71,7 +71,6 @@ public class GuestService : IGuestService
     public async Task<GuestDto> GetByIdAsync(long id)
     {
         var guest = await _guestRepository.GetByIdAsync(id);
-
         if (guest == null)
         {
             throw new KeyNotFoundException($"Guest with ID {id} not found.");
@@ -89,13 +88,12 @@ public class GuestService : IGuestService
         };
     }
 
+
     public async Task<GuestDto> UpdateAsync(long id, GuestUpdateDto guestUpdateDto)
     {
         var guest = await _guestRepository.GetByIdAsync(id);
         if (guest == null)
-        {
-            throw new KeyNotFoundException($"Guest with ID {id} not found.");
-        }
+            return null;
 
         guest.FirstName = guestUpdateDto.FirstName;
         guest.LastName = guestUpdateDto.LastName;

@@ -3,71 +3,72 @@ using RentalFlow.API.Application.DTOs.HomeRequestDTOs;
 using RentalFlow.API.Application.Interfaces.IServices;
 
 
-namespace RentalFlow.API.Controllers
+namespace RentalFlow.API.Controllers;
+
+[Route("api/[controller]")]
+[ApiController]
+public class HomeRequestController : ControllerBase
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class HomeRequestController : ControllerBase
+    private readonly IHomeRequestService _homeRequestService;
+    public HomeRequestController(IHomeRequestService homeRequestService)
     {
-        private readonly IHomeRequestService _homeRequestService;
-        public HomeRequestController(IHomeRequestService homeRequestService)
+        _homeRequestService = homeRequestService;
+    }
+
+    [HttpGet]
+    public async Task<ActionResult<IEnumerable<HomeRequestDto>>> GetAllHomeRequests([FromServices] IHomeRequestService homeRequestService)
+    {
+        var homeRequests = await homeRequestService.GetAllAsync();
+        return Ok(homeRequests);
+    }
+
+    [HttpGet("{id}")]
+    public async Task<ActionResult<HomeRequestDto>> GetHomeRequestById(long id, [FromServices] IHomeRequestService homeRequestService)
+    {
+        var homeRequest = await homeRequestService.GetByIdAsync(id);
+        if (homeRequest == null)
         {
-            _homeRequestService = homeRequestService;
+            return NotFound();
+        }
+        return Ok(homeRequest);
+    }
+
+    [HttpPost]
+    public async Task<ActionResult<HomeRequestDto>> CreateHomeRequest([FromBody] HomeRequestCreateDto homeRequestCreateDto)
+    {
+        if (homeRequestCreateDto == null)
+        {
+            return BadRequest("Home request data is null.");
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<HomeRequestDto>>> GetAllHomeRequests([FromServices] IHomeRequestService homeRequestService)
-        {
-            var homeRequests = await homeRequestService.GetAllAsync();
-            return Ok(homeRequests);
-        }
+        var createdHomeRequest = await _homeRequestService.CreateAsync(homeRequestCreateDto);
+        return CreatedAtAction(nameof(GetHomeRequestById), new { id = createdHomeRequest.Id }, createdHomeRequest);
+    }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<HomeRequestDto>> GetHomeRequestById(long id, [FromServices] IHomeRequestService homeRequestService)
-        {
-            var homeRequest = await homeRequestService.GetByIdAsync(id);
-            if (homeRequest == null)
-            {
-                return NotFound();
-            }
-            return Ok(homeRequest);
-        }
 
-        [HttpPost]
-        public async Task<ActionResult<HomeRequestDto>> CreateHomeRequest([FromBody] HomeRequestCreateDto homeRequestCreateDto, [FromServices] IHomeRequestService homeRequestService)
+    [HttpPut("{id}")]
+    public async Task<ActionResult<HomeRequestDto>> UpdateHomeRequest(long id, [FromBody] HomeRequestUpdateDto homeRequestUpdateDto, [FromServices] IHomeRequestService homeRequestService)
+    {
+        if (homeRequestUpdateDto == null)
         {
-            if (homeRequestCreateDto == null)
-            {
-                return BadRequest("Home request data is null.");
-            }
-            var createdHomeRequest = await homeRequestService.CreateAsync(homeRequestCreateDto);
-            return CreatedAtAction(nameof(GetHomeRequestById), new { id = createdHomeRequest.Id }, createdHomeRequest);
+            return BadRequest("Home request data is null.");
         }
+        var updatedHomeRequest = await homeRequestService.UpdateAsync(id, homeRequestUpdateDto);
+        if (updatedHomeRequest == null)
+        {
+            return NotFound();
+        }
+        return Ok(updatedHomeRequest);
+    }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult<HomeRequestDto>> UpdateHomeRequest(long id, [FromBody] HomeRequestUpdateDto homeRequestUpdateDto, [FromServices] IHomeRequestService homeRequestService)
+    [HttpDelete("{id}")]
+    public async Task<IActionResult> DeleteHomeRequest(long id, [FromServices] IHomeRequestService homeRequestService)
+    {
+        var result = await homeRequestService.DeleteAsync(id);
+        if (result == 0)
         {
-            if (homeRequestUpdateDto == null)
-            {
-                return BadRequest("Home request data is null.");
-            }
-            var updatedHomeRequest = await homeRequestService.UpdateAsync(id, homeRequestUpdateDto);
-            if (updatedHomeRequest == null)
-            {
-                return NotFound();
-            }
-            return Ok(updatedHomeRequest);
+            return NotFound();
         }
-
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteHomeRequest(long id, [FromServices] IHomeRequestService homeRequestService)
-        {
-            var result = await homeRequestService.DeleteAsync(id);
-            if (result == null)
-            {
-                return NotFound();
-            }
-            return NoContent();
-        }
+        return NoContent();
     }
 }

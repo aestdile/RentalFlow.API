@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.API.Infrastructu
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.API.Tests", "RentalFlow.API.Tests\RentalFlow.API.Tests.csproj", "{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RentalFlow.IntegrationTests", "RentalFlow.IntegrationTests\RentalFlow.IntegrationTests.csproj", "{6A3DCE37-D407-448B-82B8-BB418C580DC2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A68CFAD9-AC01-4CA5-AFFB-5AB39B2E3AF9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6A3DCE37-D407-448B-82B8-BB418C580DC2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6A3DCE37-D407-448B-82B8-BB418C580DC2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6A3DCE37-D407-448B-82B8-BB418C580DC2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6A3DCE37-D407-448B-82B8-BB418C580DC2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

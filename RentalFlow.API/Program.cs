@@ -1,4 +1,5 @@
 using RentalFlow.API.Infrastructure.DependencyInjection;
+using RentalFlow.API.Middlewares;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -20,8 +21,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
+app.UseMiddleware<ExceptionHandlingMiddleware>();
+
 app.UseAuthorization();
 
 app.MapControllers();
 
 app.Run();
+public partial class Program { }
+
