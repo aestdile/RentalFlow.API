@@ -18,7 +18,6 @@ public class GetByIdAsyncTests
     [Fact]
     public async Task GetByIdAsync_ShouldReturnHostDto_WhenHostExists()
     {
-        // Arrange
         var host = new Host
         {
             Id = 1,
@@ -33,10 +32,8 @@ public class GetByIdAsyncTests
         _repo.Setup(r => r.GetByIdAsync(1)).ReturnsAsync(host);
         var service = new HostService(_repo.Object);
 
-        // Act
         var result = await service.GetByIdAsync(1);
 
-        // Assert
         result.Should().NotBeNull();
         result.Id.Should().Be(1);
         result.FirstName.Should().Be("Ali");
@@ -47,14 +44,11 @@ public class GetByIdAsyncTests
     [Fact]
     public async Task GetByIdAsync_ShouldThrow_WhenHostNotFound()
     {
-        // Arrange
         _repo.Setup(r => r.GetByIdAsync(It.IsAny<long>())).ReturnsAsync((Host?)null);
         var service = new HostService(_repo.Object);
 
-        // Act
         var act = async () => await service.GetByIdAsync(999);
 
-        // Assert
         await act.Should().ThrowAsync<KeyNotFoundException>()
             .WithMessage("Host with ID 999 not found.");
     }
