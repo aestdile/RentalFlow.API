@@ -23,9 +23,7 @@ public class GuestRepository : IGenericRepository<Guest>
     {
         var guests =  await _rentalFlowDbContext.Guests.FindAsync(id);
         if (guests == null)
-        {
-            throw new KeyNotFoundException($"Guest with ID {id} not found.");
-        }
+            return 0;
 
         _rentalFlowDbContext.Guests.Remove(guests);
         await _rentalFlowDbContext.SaveChangesAsync();

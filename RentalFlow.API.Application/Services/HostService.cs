@@ -64,9 +64,7 @@ public class HostService : IHostService
     {
         var host = await _hostRepository.GetByIdAsync(id);
         if (host == null)
-        {
             throw new KeyNotFoundException($"Host with ID {id} not found.");
-        }
 
         var hostDto = new HostDto
         {

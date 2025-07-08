@@ -1,6 +1,5 @@
 ﻿using FluentAssertions;
 using Moq;
-using RentalFlow.API.Application.DTOs.HomeRequestDTOs;
 using RentalFlow.API.Application.Interfaces.Repositories;
 using RentalFlow.API.Application.Services;
 using RentalFlow.API.Domain.Entities;
@@ -51,15 +50,17 @@ public class GetByIdAsyncTests
     public async Task GetByIdAsync_ShouldThrow_WhenEntityNotFound()
     {
         // Arrange
-        var id = 999;
-        _repo.Setup(r => r.GetByIdAsync(id)).ReturnsAsync((HomeRequest)null);
+        _repo
+            .Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
+            .ReturnsAsync((HomeRequest)null);
+
         var service = new HomeRequestService(_repo.Object);
 
         // Act
-        Func<Task> act = () => service.GetByIdAsync(id);
+        Func<Task> act = async () => await service.GetByIdAsync(42);
 
         // Assert
         await act.Should().ThrowAsync<KeyNotFoundException>()
-            .WithMessage($"*{id}*not found*");
+            .WithMessage("HomeRequest with ID 42 not found.");
     }
 }

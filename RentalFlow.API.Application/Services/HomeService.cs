@@ -47,9 +47,9 @@ public class HomeService : IHomeService
         return result;
     }
 
-    public async Task<long> DeleteAsync(long id)
+    public Task<long> DeleteAsync(long id)
     {
-        return await _homeRepository.DeleteAsync(id);
+        return _homeRepository.DeleteAsync(id);
     }
 
     public async Task<IEnumerable<HomeDto>> GetAllAsync()
@@ -76,9 +76,7 @@ public class HomeService : IHomeService
     {
         var home = await _homeRepository.GetByIdAsync(id);
         if (home == null)
-        {
             throw new KeyNotFoundException($"Home with ID {id} not found.");
-        }
 
         return new HomeDto
         {

@@ -35,15 +35,28 @@ public class HomeRequestUpdateAsyncTests
     [Fact]
     public async Task UpdateAsync_ShouldThrow_WhenNotFound()
     {
-        _repo.Setup(x => x.GetByIdAsync(It.IsAny<long>()))
-             .ReturnsAsync((HomeRequest)null);
+        // Arrange
+        _repo
+            .Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
+            .ReturnsAsync((HomeRequest)null);
 
-        var service = new HomeRequestServiceWithValidation(_repo.Object);
-        Func<Task> act = () => service.UpdateAsync(99, GetValidDto());
+        var service = new HomeRequestService(_repo.Object);
 
+        var updateDto = new HomeRequestUpdateDto
+        {
+            RequestMessage = "Updated",
+            StartDate = DateTime.UtcNow.AddDays(1),
+            EndDate = DateTime.UtcNow.AddDays(3)
+        };
+
+        // Act
+        Func<Task> act = async () => await service.UpdateAsync(9999, updateDto);
+
+        // Assert
         await act.Should().ThrowAsync<KeyNotFoundException>()
-            .WithMessage("*not found*");
+            .WithMessage("HomeRequest with ID 9999 not found.");
     }
+
 
     [Theory]
     [InlineData(null)]
@@ -65,7 +78,7 @@ public class HomeRequestUpdateAsyncTests
     public async Task UpdateAsync_ShouldThrow_WhenRequestMessageIsTooLong()
     {
         var dto = GetValidDto();
-        dto.RequestMessage = new string('A', 1001); 
+        dto.RequestMessage = new string('A', 1001);
 
         _repo.Setup(x => x.GetByIdAsync(It.IsAny<long>())).ReturnsAsync(GetExistingEntity());
         var service = new HomeRequestServiceWithValidation(_repo.Object);

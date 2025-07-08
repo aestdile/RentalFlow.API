@@ -53,13 +53,18 @@ namespace RentalFlow.API.Controllers
             {
                 return BadRequest("Home data is null.");
             }
-            var updatedHome = await _homeService.UpdateAsync(id, homeUpdateDto);
-            if (updatedHome == null)
+
+            try
+            {
+                var updatedHome = await _homeService.UpdateAsync(id, homeUpdateDto);
+                return Ok(updatedHome);
+            }
+            catch (KeyNotFoundException)
             {
                 return NotFound();
             }
-            return Ok(updatedHome);
         }
+
         [HttpDelete("{id}")]
         public async Task<ActionResult<long>> Delete(long id)
         {
