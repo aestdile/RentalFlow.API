@@ -72,9 +72,7 @@ public class GuestService : IGuestService
     {
         var guest = await _guestRepository.GetByIdAsync(id);
         if (guest == null)
-        {
-            throw new KeyNotFoundException($"Guest with ID {id} not found.");
-        }
+            return null;
 
         return new GuestDto
         {

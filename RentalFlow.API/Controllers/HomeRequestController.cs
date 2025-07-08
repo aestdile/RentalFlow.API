@@ -23,15 +23,19 @@ public class HomeRequestController : ControllerBase
     }
 
     [HttpGet("{id}")]
-    public async Task<ActionResult<HomeRequestDto>> GetHomeRequestById(long id, [FromServices] IHomeRequestService homeRequestService)
+    public async Task<ActionResult<HomeRequestDto>> GetHomeRequestById(long id)
     {
-        var homeRequest = await homeRequestService.GetByIdAsync(id);
-        if (homeRequest == null)
+        try
+        {
+            var homeRequest = await _homeRequestService.GetByIdAsync(id);
+            return Ok(homeRequest);
+        }
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-        return Ok(homeRequest);
     }
+
 
     [HttpPost]
     public async Task<ActionResult<HomeRequestDto>> CreateHomeRequest([FromBody] HomeRequestCreateDto homeRequestCreateDto)
@@ -47,28 +51,38 @@ public class HomeRequestController : ControllerBase
 
 
     [HttpPut("{id}")]
-    public async Task<ActionResult<HomeRequestDto>> UpdateHomeRequest(long id, [FromBody] HomeRequestUpdateDto homeRequestUpdateDto, [FromServices] IHomeRequestService homeRequestService)
+    public async Task<ActionResult<HomeRequestDto>> UpdateHomeRequest(long id, [FromBody] HomeRequestUpdateDto homeRequestUpdateDto)
     {
         if (homeRequestUpdateDto == null)
-        {
             return BadRequest("Home request data is null.");
+
+        try
+        {
+            var updatedHomeRequest = await _homeRequestService.UpdateAsync(id, homeRequestUpdateDto);
+            return Ok(updatedHomeRequest);
         }
-        var updatedHomeRequest = await homeRequestService.UpdateAsync(id, homeRequestUpdateDto);
-        if (updatedHomeRequest == null)
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-        return Ok(updatedHomeRequest);
     }
 
+
     [HttpDelete("{id}")]
-    public async Task<IActionResult> DeleteHomeRequest(long id, [FromServices] IHomeRequestService homeRequestService)
+    public async Task<IActionResult> DeleteHomeRequest(long id)
     {
-        var result = await homeRequestService.DeleteAsync(id);
-        if (result == 0)
+        try
+        {
+            var result = await _homeRequestService.DeleteAsync(id);
+            if (result == 0)
+                return NotFound();
+
+            return NoContent();
+        }
+        catch (KeyNotFoundException)
         {
             return NotFound();
         }
-        return NoContent();
     }
+
 }

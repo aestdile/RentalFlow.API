@@ -48,21 +48,17 @@ namespace RentalFlow.UnitTests.GuestServiceTests
         }
 
         [Fact]
-        public async Task GetByIdAsync_ShouldThrow_WhenGuestDoesNotExist()
+        public async Task GetByIdAsync_ShouldReturnNull_WhenGuestDoesNotExist()
         {
-            // Arrange
-            _guestRepositoryMock
-                .Setup(repo => repo.GetByIdAsync(It.IsAny<long>()))
-                .ReturnsAsync((Guest)null);
+            _guestRepositoryMock.Setup(x => x.GetByIdAsync(It.IsAny<long>()))
+                                .ReturnsAsync((Guest)null);
 
             var service = new GuestService(_guestRepositoryMock.Object);
 
-            // Act
-            Func<Task> act = async () => await service.GetByIdAsync(42);
+            var result = await service.GetByIdAsync(9999);
 
-            // Assert
-            await act.Should().ThrowAsync<KeyNotFoundException>()
-                .WithMessage("Guest with ID 42 not found.");
+            result.Should().BeNull(); 
         }
+
     }
 }
