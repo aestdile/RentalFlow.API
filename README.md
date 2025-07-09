@@ -122,7 +122,7 @@ dotnet ef database update
 
 ## ✍️ Muallif
 👤 Mukhtor Eshboyev\
-🔗 GitHub: [@aestdile](https://github.com/aestdile)\
+🔗 GitHub: [@aestdile](https://github.com/aestdile)
 
 ## 📞 Aloqa
 
