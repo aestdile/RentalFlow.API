@@ -1,10 +1,10 @@
-﻿using RentalFlow.API.Domain.Enums;
+﻿using RentalFlow.API.Domain.Common;
+using RentalFlow.API.Domain.Enums;
 
 namespace RentalFlow.API.Application.DTOs.HostDTOs;
 
-public class HostDto
+public class HostDto : BaseEntity<long>
 {
-    public long Id { get; set; }
     public string FirstName { get; set; }
     public string LastName { get; set; }
     public DateTime DateOfBirth { get; set; }

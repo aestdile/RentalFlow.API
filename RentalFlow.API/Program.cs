@@ -1,6 +1,5 @@
 using RentalFlow.API.Infrastructure.DependencyInjection;
 
-
 var builder = WebApplication.CreateBuilder(args);
 
 
