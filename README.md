@@ -120,9 +120,9 @@ dotnet ef database update
 4. Branch ni push qiling (`git push origin feature/new-feature`)
 5. Pull Request yarating
 
-## 👥 Muallif
-
-**aestdile** - [GitHub](https://github.com/aestdile)
+## ✍️ Muallif
+👤 Mukhtor Eshboyev\
+🔗 GitHub: [@aestdile](https://github.com/aestdile)\
 
 ## 📞 Aloqa
 
