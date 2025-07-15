@@ -2,6 +2,7 @@ using RentalFlow.API.Infrastructure.DependencyInjection;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.ConfigureSerilog();
 
 builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();

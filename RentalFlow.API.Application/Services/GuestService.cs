@@ -1,4 +1,5 @@
-﻿using RentalFlow.API.Application.DTOs.GuestDTOs;
+﻿using Microsoft.Extensions.Logging;
+using RentalFlow.API.Application.DTOs.GuestDTOs;
 using RentalFlow.API.Application.Interfaces.IServices;
 using RentalFlow.API.Application.Interfaces.Repositories;
 using RentalFlow.API.Domain.Entities;
@@ -8,10 +9,12 @@ namespace RentalFlow.API.Application.Services;
 public class GuestService : IGuestService
 {
     private readonly IGenericRepository<Guest> _guestRepository;
+    private readonly ILogger<GuestService> _logger;
 
-    public GuestService(IGenericRepository<Guest> guestRepository)
+    public GuestService(IGenericRepository<Guest> guestRepository, ILogger<GuestService> logger)
     {
         _guestRepository = guestRepository;
+        _logger = logger;
     }
     public async Task<GuestDto> CreateAsync(GuestCreateDto guestCreateDto)
     {
@@ -33,6 +36,8 @@ public class GuestService : IGuestService
 
         if (createdGuest == null)
             throw new InvalidOperationException("Failed to create guest.");
+
+        _logger.LogInformation($"Guest created with ID: {createdGuest.Id}");
 
         return new GuestDto
         {
